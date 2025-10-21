@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    container_name: rankmyapp-order-service
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+      - rabbitmq
+    restart: always
+    networks:
+      - rankmyapp-orders-net
+
+  mongo:
+    image: mongo:8
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - rankmyapp-orders-net
+
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - rankmyapp-orders-net
+
+networks:
+  rankmyapp-orders-net:
+    driver: bridge
+
+volumes:
+  mongo-data:

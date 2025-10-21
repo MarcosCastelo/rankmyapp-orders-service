@@ -1,0 +1,18 @@
+# Node
+node_modules
+dist
+coverage
+.env
+.env.local
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Docker
+docker-data
