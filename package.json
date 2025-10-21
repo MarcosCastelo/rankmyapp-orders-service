@@ -42,6 +42,13 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/domain/**/*.ts"
+      
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov", "html", "json"],
     "coverageThreshold": {
       "global": {
         "branches": 60,
