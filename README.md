@@ -59,7 +59,17 @@ npm run test:cov
 
 ## Diagrama de arquitetura
 
+<img width="3107" height="3041" alt="image" src="https://github.com/user-attachments/assets/c30370b9-924e-453d-924a-025e3a7bc0c6" />
 
+O serviço de pedidos se comunica com outros microsserviços de forma assíncrona via RabbitMQ.
+Eventos de domínio, como OrderCreated e OrderStatusUpdated, são gerados no domínio e empacotados como EventEnvelope pelo EventFactory.
+Esses eventos são enviados para a porta IEventDispatcher, cuja implementação RabbitMQEventDispatcher publica no exchange orders.events (tipo topic, durable: true).
+A routing key é derivada do nome do evento (OrderCreated → order.created).
+Outros microsserviços, como billing e shipping, criam filas com bindings para o exchange.
+Cada serviço consome mensagens conforme o tipo de evento que lhe interessa.
+A comunicação é totalmente desacoplada: o produtor não conhece os consumidores.
+
+O serviço HTTP é stateless, permitindo escalar réplicas atrás de um Load Balancer com health checks. O RabbitMQ usa exchanges duráveis e filas próprias por microsserviço; múltiplos consumidores com prefetch adequado aumentam throughput, com DLQ e retries para falhas. O MongoDB deve ter replica set e índices nas queries críticas, com sharding se necessário.
 
 Estrutura de pastas principal:
 
