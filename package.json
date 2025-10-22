@@ -44,8 +44,9 @@
     "testEnvironment": "node",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/domain/**/*.ts"
-      
+      "src/**/*.ts",
+      "!src/**/*.d.ts",
+      "!src/index.ts"
     ],
     "coverageDirectory": "coverage",
     "coverageReporters": ["text", "lcov", "html", "json"],
