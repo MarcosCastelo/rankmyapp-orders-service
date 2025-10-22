@@ -2,13 +2,7 @@ import { Order } from '../../domain/entities/Order';
 import { IOrderRepository } from '../ports/repositories/IOrderRespository';
 import { IEventDispatcher } from '../ports/messaging/IEventDispatcher';
 import { toEnvelope } from '../events/EventFactory';
-
-type CreateOrderInput = {
-  id: string;
-  orderNumber: string;
-  customerId: string;
-  items: Array<{ sku: string; qty: number; unitPrice: number; lineTotal: number }>;
-};
+import { CreateOrderDTO } from '../dto/CreateOrderDTO';
 
 export class CreateOrderUseCase {
   constructor(
@@ -16,7 +10,7 @@ export class CreateOrderUseCase {
     private readonly dispatcher: IEventDispatcher
   ) {}
 
-  async execute(input: CreateOrderInput): Promise<Order> {
+  async execute(input: CreateOrderDTO): Promise<Order> {
     const order = Order.create(input);
 
     await this.repo.save(order);

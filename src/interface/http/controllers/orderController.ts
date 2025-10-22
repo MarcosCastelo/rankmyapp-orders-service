@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { CreateOrderUseCase } from '../../../application/use-cases/CreateOrderUseCase';
 import { UpdateOrderStatusUseCase } from '../../../application/use-cases/UpdateOrderStatusUseCase';
 import { GetOrderByIdUseCase } from '../../../application/use-cases/GetOrderByIdUseCase';
+import { toOrderView } from '../presenters/OrderPresenter';
 
 export class OrderController {
   constructor(
@@ -25,20 +26,7 @@ export class OrderController {
 
   async getById(req: Request, res: Response) {
     const order = await this.getOrderById.execute({ orderId: req.params.id });
-    res.status(200).json({
-      id: order.id,
-      orderNumber: order.orderNumber,
-      customerId: order.customerId,
-      items: order.items,
-      total: order.total,
-      status: order.status.toString(),
-      statusHistory: order.statusHistory.map(h => ({
-        status: h.status.toString(),
-        changedAt: h.changedAt.toISOString(),
-      })),
-      createdAt: order.createdAt.toISOString(),
-      updatedAt: order.updatedAt.toISOString(),
-      version: order.version,
-    });
+    const view = toOrderView(order);
+    res.status(200).json(view);
   }
 }

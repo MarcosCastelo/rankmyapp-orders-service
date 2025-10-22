@@ -3,11 +3,7 @@ import { IOrderRepository } from '../ports/repositories/IOrderRespository';
 import { IEventDispatcher } from '../ports/messaging/IEventDispatcher';
 import { toEnvelope } from '../events/EventFactory';
 import { OrderNotFoundError } from '../../domain/errors';
-
-type ChangeOrderStatusInput = {
-  orderId: string;
-  newStatus: string;
-};
+import { UpdateOrderStatusDTO } from '../dto/UpdateOrderStatusDTO';
 
 export class UpdateOrderStatusUseCase {
   constructor(
@@ -15,7 +11,7 @@ export class UpdateOrderStatusUseCase {
     private readonly dispatcher: IEventDispatcher
   ) {}
 
-  async execute(input: ChangeOrderStatusInput): Promise<void> {
+  async execute(input: UpdateOrderStatusDTO): Promise<void> {
     const order = await this.repo.findById(input.orderId);
     if (!order) {
       throw new OrderNotFoundError(`Order ${input.orderId} not found`);

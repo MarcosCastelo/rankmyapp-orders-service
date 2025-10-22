@@ -7,7 +7,7 @@ import { RabbitMQEventDispatcher } from './interface/messaging/rabbitmq/RabbitMQ
 import { CreateOrderUseCase } from './application/use-cases/CreateOrderUseCase';
 import { UpdateOrderStatusUseCase } from './application/use-cases/UpdateOrderStatusUseCase';
 import { GetOrderByIdUseCase } from './application/use-cases/GetOrderByIdUseCase';
-import { OrderController } from './interface/http/controllers/orderController';
+import { OrderController } from './interface/http/controllers/OrderController';
 import { buildOrderRoutes } from './interface/http/routes';
 import { createApp } from './infra/server/app';
 

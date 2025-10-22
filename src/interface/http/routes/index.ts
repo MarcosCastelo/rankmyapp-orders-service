@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { OrderController } from '../controllers/orderController';
+import { OrderController } from '../controllers/OrderController';
 import { createOrderSchema, updateStatusSchema } from '../validators/orderSchema';
 import { presentError } from '../presenters/ErrorPresenter';
 
@@ -13,11 +13,12 @@ export function buildOrderRoutes(controller: OrderController): Router {
       presentError(err, res);
     }
   });
+
   router.post('/orders', async (req, res) => {
     try {
       const parsed = createOrderSchema.parse(req.body);
       const order = await controller.create({ body: parsed } as any, res);
-      return order
+      return order;
     } catch (err) {
       presentError(err, res);
     }
