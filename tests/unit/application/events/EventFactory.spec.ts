@@ -2,7 +2,7 @@ import { toEnvelope } from '../../../../src/application/events/EventFactory';
 import { buildOrderCreatedEvent, buildOrderStatusUpdatedEvent } from '../../../mocks/orderEvents';
 
 describe('EventFactory.toEnvelope', () => {
-  it('envelope com metadata default {} quando não fornecida', () => {
+  it('envelope with default metadata {} when not provided', () => {
     const evt = buildOrderCreatedEvent({ metadata: undefined });
     const envelope = toEnvelope(evt as any, 1);
 
@@ -15,7 +15,7 @@ describe('EventFactory.toEnvelope', () => {
     expect(envelope.metadata).toEqual({});
   });
 
-  it('preserva metadata quando fornecida', () => {
+  it('preserves metadata when provided', () => {
     const meta = { source: 'test' };
     const evt = buildOrderStatusUpdatedEvent({ metadata: meta });
     const envelope = toEnvelope(evt as any, 3);

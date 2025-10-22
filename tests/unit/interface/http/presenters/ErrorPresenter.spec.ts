@@ -16,7 +16,7 @@ function makeRes() {
 }
 
 describe('ErrorPresenter', () => {
-  it('ZodError → 400 ValidationError com details', () => {
+  it('Zod error -> 400 ValidationError with details', () => {
     const schema = z.object({ id: z.string() });
     const result = schema.safeParse({ id: 123 });
     expect(result.success).toBe(false);
@@ -30,7 +30,7 @@ describe('ErrorPresenter', () => {
     expect(Array.isArray(body.details)).toBe(true);
   });
 
-  it('InvalidOrderStateError → 400 InvalidOrderState com message e detalhes', () => {
+  it('InvalidOrderStateError -> 400 InvalidOrderState', () => {
     const err = InvalidOrderStateError.forInvalidTransition('CREATED', 'DELIVERED');
     const res = makeRes();
 
@@ -46,7 +46,7 @@ describe('ErrorPresenter', () => {
     });
   });
 
-  it('OrderNotFoundError → 404 OrderNotFound com message', () => {
+  it('OrderNotFoundError -> 404 OrderNotFound', () => {
     const err = new OrderNotFoundError('Order 123 not found');
     const res = makeRes();
 
@@ -60,7 +60,7 @@ describe('ErrorPresenter', () => {
     });
   });
 
-  it('Erro genérico → 500 InternalServerError, log chamado e message preservada', () => {
+  it('Generic error -> 500 InternalServerError, logs called and preserves message', () => {
     const err = new Error('boom');
     const res = makeRes();
 
@@ -75,7 +75,7 @@ describe('ErrorPresenter', () => {
     });
   });
 
-  it('Valor não-Error → 500 InternalServerError com "Unknown error" e log chamado', () => {
+  it('Non-Error value -> 500 InternalServerError with "Unknown error" and logs called', () => {
     const res = makeRes();
 
     presentError('oops' as any, res);

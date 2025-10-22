@@ -10,7 +10,7 @@ function makeRes() {
 }
 
 describe('OrderController', () => {
-  it('create retorna 201 com id e orderNumber', async () => {
+  it('create returns 201 with id and orderNumber', async () => {
     const createOrder = { execute: jest.fn().mockResolvedValue({ id: 'order-1', orderNumber: 'ORD-1' }) } as any;
     const updateOrderStatus = { execute: jest.fn() } as any;
     const getOrderById = { execute: jest.fn() } as any;
@@ -26,7 +26,7 @@ describe('OrderController', () => {
     expect(res.json).toHaveBeenCalledWith({ id: 'order-1', orderNumber: 'ORD-1' });
   });
 
-  it('updateStatus retorna 204', async () => {
+  it('updateStatus returns 204', async () => {
     const createOrder = { execute: jest.fn() } as any;
     const updateOrderStatus = { execute: jest.fn().mockResolvedValue(undefined) } as any;
     const getOrderById = { execute: jest.fn() } as any;
