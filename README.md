@@ -52,6 +52,10 @@ Cobertura atual (referência observada):
 
 Principais decisões técnicas:
 
+- Arquitetura em camadas com separação de responsabilidades: Domain , Application , Interface e Infra .
+- Uso de portas e adaptadores para isolar regras de negócio da infraestrutura, reduzindo acoplamento e facilitando substituições.
+- Foco em eventos de domínio como mecanismo de integração e consistência entre camadas.
+
 Como rodar cobertura localmente:
 ```bash
 npm run test:cov
